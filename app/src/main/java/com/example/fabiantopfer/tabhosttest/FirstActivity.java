@@ -11,7 +11,7 @@ import android.widget.Button;
  */
 public class FirstActivity extends  Activity{
 
-    private Button add;
+    private Button addNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +28,9 @@ public class FirstActivity extends  Activity{
 
 
     private void InitializeApp(){
-        add = (Button)findViewById(R.id.add);
+        addNote = (Button)findViewById(R.id.add);
 
-        add.setOnClickListener(new View.OnClickListener()
+        addNote.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -52,7 +52,6 @@ public class FirstActivity extends  Activity{
         startActivity(add);
         System.out.println("Intent");
 
-        //startActivityForResult(add, 1);
 
 
     }
