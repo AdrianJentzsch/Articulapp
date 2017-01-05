@@ -28,20 +28,19 @@ public class FirstActivity extends  Activity{
 
 
     private void InitializeApp(){
-        addNote = (Button)findViewById(R.id.add);
 
+        addNote = (Button)findViewById(R.id.add);
         addNote.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 startAdd();
-
-
             }
-
-
         });
+
+        //  String Thekey = getIntent().getExtras().getString("TheKey");
+        //  System.out.println("FirstActivity KEy " + Thekey);
 
 
 
@@ -50,10 +49,6 @@ public class FirstActivity extends  Activity{
     private void startAdd() {
         Intent add = new Intent (FirstActivity.this, add_Notiz.class);
         startActivity(add);
-        System.out.println("Intent");
-
-
-
     }
 }
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -71,9 +72,16 @@ public class add_Notiz  extends Activity{
 
                          System.out.println(speicher.getString(key, "String ist leer"));
                          System.out.println(key);
+                         System.out.println(" DER GESAMTE SPEICHER " + speicher.getAll());
 
                          dialog.cancel();
-                         finish();
+
+                         //Back to MainActivity with Key-Value
+                         Intent intent = new Intent(add_Notiz.this, MainActivity.class);
+                         intent.putExtra("TheKey", key);
+                         startActivity(intent);
+
+                         //finish();
                      }
                 });
 
@@ -87,12 +95,6 @@ public class add_Notiz  extends Activity{
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
-
-
-
-
-
-
     }
 
 
