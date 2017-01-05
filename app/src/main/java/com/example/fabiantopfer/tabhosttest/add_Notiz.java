@@ -15,13 +15,8 @@ import android.widget.EditText;
  */
 
 public class add_Notiz  extends Activity{
-
-
-
     private Button save;
     private EditText etNotiz;
-
-    public final static String note ="Note";
     SharedPreferences speicher;
 
     @Override
@@ -33,14 +28,11 @@ public class add_Notiz  extends Activity{
     }
 
     private void InitializeApp(){
+
+
         etNotiz = (EditText) findViewById(R.id.eT_Notiz);
         save = (Button) findViewById(R.id.save);
-
-
-
-        speicher = getSharedPreferences(note, Context.MODE_PRIVATE);
-
-
+        speicher = getPreferences(Context.MODE_PRIVATE);
 
         save.setOnClickListener(new View.OnClickListener()
         {
@@ -51,21 +43,13 @@ public class add_Notiz  extends Activity{
                 saveAlert();
 
             }
-
-
         });
-
-
-
-
-
-
     }
-
-
     private void saveAlert()
     {
         final EditText edittext = new EditText(this);
+
+        // ALERT
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage("SAVE");
@@ -73,10 +57,8 @@ public class add_Notiz  extends Activity{
         builder1.setView(edittext);
 
 
-
-
         builder1.setPositiveButton(
-                "Yes",
+                "SURE",
                 new DialogInterface.OnClickListener() {
                      public void onClick(DialogInterface dialog, int id) {
 
@@ -87,13 +69,12 @@ public class add_Notiz  extends Activity{
                          editor.putString(key, etNotiz.getText().toString());
                          editor.commit();
 
-                        System.out.println(speicher.getString(key, "String ist leer"));
-                        System.out.println(key);
+                         System.out.println(speicher.getString(key, "String ist leer"));
+                         System.out.println(key);
 
                          dialog.cancel();
-                        finish();
-
-                    }
+                         finish();
+                     }
                 });
 
         builder1.setNegativeButton(
