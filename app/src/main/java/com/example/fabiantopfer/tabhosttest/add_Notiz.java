@@ -65,30 +65,32 @@ public class add_Notiz  extends Activity{
 
     private void saveAlert()
     {
-
         final EditText edittext = new EditText(this);
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage("SAVE");
         builder1.setCancelable(true);
         builder1.setView(edittext);
-        final  String key = edittext.getText().toString();
+
+
 
 
         builder1.setPositiveButton(
                 "Yes",
                 new DialogInterface.OnClickListener() {
                      public void onClick(DialogInterface dialog, int id) {
-                        // SPEICHERN UND LISTVIEW
 
+                         // SPEICHERN UND LISTVIEW
 
-                        SharedPreferences.Editor editor = speicher.edit();
-                        editor.putString("", etNotiz.getText().toString());
-                        editor.commit();
+                         final String key = edittext.getText().toString();
+                         SharedPreferences.Editor editor = speicher.edit();
+                         editor.putString(key, etNotiz.getText().toString());
+                         editor.commit();
 
-                        System.out.println(speicher.getString(key,null));
+                        System.out.println(speicher.getString(key, "String ist leer"));
                         System.out.println(key);
-                        dialog.cancel();
+
+                         dialog.cancel();
                         finish();
 
                     }
