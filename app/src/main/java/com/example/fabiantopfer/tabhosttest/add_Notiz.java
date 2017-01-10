@@ -8,8 +8,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fabiantopfer on 20.12.16.
@@ -20,20 +24,25 @@ public class add_Notiz  extends Activity{
     private EditText etNotiz;
     SharedPreferences speicher;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_notiz);
 
         InitializeApp();
+
     }
 
     private void InitializeApp(){
 
-
         etNotiz = (EditText) findViewById(R.id.eT_Notiz);
         save = (Button) findViewById(R.id.save);
         speicher = getPreferences(Context.MODE_PRIVATE);
+
+
+
+
 
         save.setOnClickListener(new View.OnClickListener()
         {
@@ -72,21 +81,29 @@ public class add_Notiz  extends Activity{
 
                          System.out.println(speicher.getString(key, "String ist leer"));
                          System.out.println(key);
-                         System.out.println(" DER GESAMTE SPEICHER " + speicher.getAll());
+                         //System.out.println(" DER GESAMTE SPEICHER " + speicher.getAll());
 
                          dialog.cancel();
+
+
+
 
                          //Back to MainActivity with Key-Value
                          Intent intent = new Intent(add_Notiz.this, MainActivity.class);
                          intent.putExtra("TheKey", key);
-                         startActivity(intent);
+                         setResult(Activity.RESULT_OK, intent);
+                         finish();
 
-                         //finish();
+
+
+
+
+
                      }
                 });
 
         builder1.setNegativeButton(
-                "No",
+                "NO",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -96,6 +113,8 @@ public class add_Notiz  extends Activity{
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
+
+
 
 
 }
