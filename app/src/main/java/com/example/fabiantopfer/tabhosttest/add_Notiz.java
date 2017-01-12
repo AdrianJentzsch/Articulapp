@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by fabiantopfer on 20.12.16.
@@ -23,6 +24,9 @@ public class add_Notiz  extends Activity{
     private Button save;
     private EditText etNotiz;
     SharedPreferences speicher;
+    ArrayList<String> keyList = new ArrayList<>();
+    private String key;
+
 
 
     @Override
@@ -38,8 +42,7 @@ public class add_Notiz  extends Activity{
 
         etNotiz = (EditText) findViewById(R.id.eT_Notiz);
         save = (Button) findViewById(R.id.save);
-        speicher = getPreferences(Context.MODE_PRIVATE);
-
+        speicher = getSharedPreferences("Notizenspeicher",Context.MODE_PRIVATE);
 
 
 
@@ -49,9 +52,7 @@ public class add_Notiz  extends Activity{
             @Override
             public void onClick(View v)
             {
-
                 saveAlert();
-
             }
         });
     }
@@ -60,7 +61,6 @@ public class add_Notiz  extends Activity{
         final EditText edittext = new EditText(this);
 
         // ALERT
-
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage("SAVE");
         builder1.setCancelable(true);
@@ -73,32 +73,34 @@ public class add_Notiz  extends Activity{
                      public void onClick(DialogInterface dialog, int id) {
 
                          // SPEICHERN UND LISTVIEW
-
-                         final String key = edittext.getText().toString();
+                         key = new String();
+                         key = edittext.getText().toString();
                          SharedPreferences.Editor editor = speicher.edit();
                          editor.putString(key, etNotiz.getText().toString());
                          editor.commit();
 
-                         System.out.println(speicher.getString(key, "String ist leer"));
-                         System.out.println(key);
-                         //System.out.println(" DER GESAMTE SPEICHER " + speicher.getAll());
+                         add(key);
+                         //keyList.add(key);
+                        // System.out.println(key + " Schlüssel");
+                         System.out.println(keyList.size());
 
+                         editor.putInt("Status_size",keyList.size());
+
+                         for (int i = 0; i< keyList.size(); i++){
+                             //editor.remove("Status_"+i);
+                             editor.putString(("Notiz_" + i).toString(), keyList.get(i));
+                         }
+                         editor.commit();
+
+                         //editor.putStringSet("KeyList", keyList);
+                         //editor.commit();
                          dialog.cancel();
-
-
-
 
                          //Back to MainActivity with Key-Value
                          Intent intent = new Intent(add_Notiz.this, MainActivity.class);
                          intent.putExtra("TheKey", key);
                          setResult(Activity.RESULT_OK, intent);
                          finish();
-
-
-
-
-
-
                      }
                 });
 
@@ -115,6 +117,9 @@ public class add_Notiz  extends Activity{
     }
 
 
-
+    public ArrayList add ( String string){
+        keyList.add(string);
+        return keyList;
+    }
 
 }
