@@ -24,7 +24,7 @@ public class add_Notiz  extends Activity{
     private Button save;
     private EditText etNotiz;
     SharedPreferences speicher;
-    ArrayList<String> keyList = new ArrayList<>();
+  //  ArrayList<String> keyList ;
     private String key;
 
 
@@ -33,32 +33,24 @@ public class add_Notiz  extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_notiz);
-
         InitializeApp();
-
     }
 
     private void InitializeApp(){
-
+       // keyList = new ArrayList<String>();
         etNotiz = (EditText) findViewById(R.id.eT_Notiz);
         save = (Button) findViewById(R.id.save);
         speicher = getSharedPreferences("Notizenspeicher",Context.MODE_PRIVATE);
-
-
-
-
-        save.setOnClickListener(new View.OnClickListener()
-        {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 saveAlert();
             }
         });
     }
-    private void saveAlert()
-    {
-        final EditText edittext = new EditText(this);
+    private void saveAlert() {
+
+        final EditText edittext  = new EditText(this); ;
 
         // ALERT
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
@@ -73,27 +65,17 @@ public class add_Notiz  extends Activity{
                      public void onClick(DialogInterface dialog, int id) {
 
                          // SPEICHERN UND LISTVIEW
-                         key = new String();
                          key = edittext.getText().toString();
                          SharedPreferences.Editor editor = speicher.edit();
                          editor.putString(key, etNotiz.getText().toString());
                          editor.commit();
 
-                         add(key);
-                         //keyList.add(key);
-                        // System.out.println(key + " Schlüssel");
-                         System.out.println(keyList.size());
+                        // keyList.add(key);
+                       //  System.out.println(keyList.size());
+                       //  editor.putInt("Status_size",keyList.size());
 
-                         editor.putInt("Status_size",keyList.size());
 
-                         for (int i = 0; i< keyList.size(); i++){
-                             //editor.remove("Status_"+i);
-                             editor.putString(("Notiz_" + i).toString(), keyList.get(i));
-                         }
                          editor.commit();
-
-                         //editor.putStringSet("KeyList", keyList);
-                         //editor.commit();
                          dialog.cancel();
 
                          //Back to MainActivity with Key-Value
@@ -117,9 +99,6 @@ public class add_Notiz  extends Activity{
     }
 
 
-    public ArrayList add ( String string){
-        keyList.add(string);
-        return keyList;
-    }
+
 
 }

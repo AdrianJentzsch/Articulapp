@@ -23,38 +23,30 @@ public class FirstActivity extends  Activity{
     private Button addNote;
     private ListView list;
     private ArrayAdapter <String> adapter;
-    ArrayList<String> keys;
+    ArrayList<String> keyArray;
     SharedPreferences speicher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         setContentView( R.layout.first_layout );
-
         InitializeApp();
-
-
     }
-
-
-
     private void InitializeApp(){
 
         speicher = getSharedPreferences("Notizenspeicher", Context.MODE_PRIVATE);
         System.out.println(speicher.getAll() + " Das ist der Speicher");
-        keys = new ArrayList<String>();
+        keyArray = new ArrayList<String>();
 
         //keys.clear();
-        int size = speicher.getInt("Status_Size", 0);
+        int size = speicher.getInt("SizeArray", 0);
         for(int i =0; i < size;i++)
         {
-            keys.add(speicher.getString("Notiz_"+i, null).toString());
+            keyArray.add(speicher.getString("Notiz_"+i, null).toString());
         }
 
         list = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, keys );
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, keyArray );
         adapter.notifyDataSetChanged();
         list.setAdapter(adapter);
         addNote = (Button)findViewById(R.id.add);
@@ -71,21 +63,25 @@ public class FirstActivity extends  Activity{
         Intent add = new Intent (FirstActivity.this, add_Notiz.class);
         startActivityForResult(add,1);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == 1){
             if(resultCode == Activity.RESULT_OK){
-                System.out.println(data.getStringExtra("TheKey").toString() + " ListView");
                 refreshListView(data);
             }
         }
     }
-
-
     void refreshListView(Intent data){
-        keys.add(data.getStringExtra("TheKey").toString());
-       // add_Notiz.keyList.add(data.getStringExtra("TheKey").toString());
+        SharedPreferences.Editor editor = speicher.edit();
+        //WENN LÖSCHEN DANN MUSS DAS IN onActivityResult!!!!
+        keyArray.add(data.getStringExtra("TheKey").toString());
+
+        for (int i = 0; i < keyArray.size(); i++){
+            editor.remove("Notiz_"+i);
+            editor.putString(("Notiz_" + i), keyArray.get(i));
+         }
+        editor.putInt("SizeArray", keyArray.size());
+        editor.commit();
         adapter.notifyDataSetChanged();
      }
 
