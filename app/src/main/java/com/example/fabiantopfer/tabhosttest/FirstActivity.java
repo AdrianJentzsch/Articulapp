@@ -2,18 +2,14 @@ package com.example.fabiantopfer.tabhosttest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by fabiantopfer on 18.12.16.
@@ -30,22 +26,34 @@ public class FirstActivity extends  Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.first_layout );
+
         InitializeApp();
     }
     private void InitializeApp(){
 
+        //LISTVIEW AND ONCLICKADAPTER
+        list = (ListView) findViewById(R.id.listView);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+              Intent showNote = new Intent();
+              showNote.setClass(getApplicationContext(), ShowNote.class);
+              showNote.putExtra("Key",keyArray.get(i));
+              showNote.putExtra("ArrayPosition",i);
+              startActivityForResult(showNote,2);
+          }
+      });
+
         speicher = getSharedPreferences("Notizenspeicher", Context.MODE_PRIVATE);
-        System.out.println(speicher.getAll() + " Das ist der Speicher");
         keyArray = new ArrayList<String>();
 
-        //keys.clear();
         int size = speicher.getInt("SizeArray", 0);
         for(int i =0; i < size;i++)
         {
             keyArray.add(speicher.getString("Notiz_"+i, null).toString());
-        }
+            System.out.println(keyArray.get(i));
 
-        list = (ListView) findViewById(R.id.listView);
+        }
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, keyArray );
         adapter.notifyDataSetChanged();
         list.setAdapter(adapter);
@@ -57,6 +65,7 @@ public class FirstActivity extends  Activity{
             {
                 startAdd();
             }
+
         });
     }
     private void startAdd() {
@@ -65,8 +74,18 @@ public class FirstActivity extends  Activity{
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == 1){
+      if (requestCode == 1){
             if(resultCode == Activity.RESULT_OK){
+                deleteKeyArray();
+                keyArray.add(data.getStringExtra("TheKey").toString());
+                refreshListView(data);
+            }
+        }
+
+        if (requestCode == 2){
+            if(resultCode == Activity.RESULT_OK){
+                deleteKeyArray();
+                keyArray.remove(data.getIntExtra("ThePosition",0));
                 refreshListView(data);
             }
         }
@@ -74,16 +93,26 @@ public class FirstActivity extends  Activity{
     void refreshListView(Intent data){
         SharedPreferences.Editor editor = speicher.edit();
         //WENN LÖSCHEN DANN MUSS DAS IN onActivityResult!!!!
-        keyArray.add(data.getStringExtra("TheKey").toString());
 
         for (int i = 0; i < keyArray.size(); i++){
-            editor.remove("Notiz_"+i);
             editor.putString(("Notiz_" + i), keyArray.get(i));
          }
         editor.putInt("SizeArray", keyArray.size());
         editor.commit();
+        System.out.println(speicher.getAll() + " Speicher");
+
         adapter.notifyDataSetChanged();
      }
+
+    void deleteKeyArray(){
+        SharedPreferences.Editor editor = speicher.edit();
+
+        for (int i = 0; i < keyArray.size(); i++){
+            editor.remove("Notiz_" + i);
+            editor.commit();
+        }
+
+    }
 
 }
 

@@ -18,6 +18,8 @@
         <activity android:name=".FirstActivity"/>
         <activity android:name=".SecondActivity"/>
         <activity android:name=".add_Notiz"/>
+        <activity android:name=".ShowNote"/>
+
 
     </application>
 

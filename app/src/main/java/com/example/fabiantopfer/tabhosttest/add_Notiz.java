@@ -8,13 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by fabiantopfer on 20.12.16.
@@ -24,7 +19,6 @@ public class add_Notiz  extends Activity{
     private Button save;
     private EditText etNotiz;
     SharedPreferences speicher;
-  //  ArrayList<String> keyList ;
     private String key;
 
 
@@ -37,7 +31,6 @@ public class add_Notiz  extends Activity{
     }
 
     private void InitializeApp(){
-       // keyList = new ArrayList<String>();
         etNotiz = (EditText) findViewById(R.id.eT_Notiz);
         save = (Button) findViewById(R.id.save);
         speicher = getSharedPreferences("Notizenspeicher",Context.MODE_PRIVATE);
@@ -49,16 +42,12 @@ public class add_Notiz  extends Activity{
         });
     }
     private void saveAlert() {
-
         final EditText edittext  = new EditText(this); ;
-
         // ALERT
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage("SAVE");
         builder1.setCancelable(true);
         builder1.setView(edittext);
-
-
         builder1.setPositiveButton(
                 "SURE",
                 new DialogInterface.OnClickListener() {
@@ -68,13 +57,6 @@ public class add_Notiz  extends Activity{
                          key = edittext.getText().toString();
                          SharedPreferences.Editor editor = speicher.edit();
                          editor.putString(key, etNotiz.getText().toString());
-                         editor.commit();
-
-                        // keyList.add(key);
-                       //  System.out.println(keyList.size());
-                       //  editor.putInt("Status_size",keyList.size());
-
-
                          editor.commit();
                          dialog.cancel();
 
