@@ -19,7 +19,7 @@ public class FirstActivity extends  Activity{
     private Button addNote;
     private ListView list;
     private ArrayAdapter <String> adapter;
-    ArrayList<String> keyArray;
+    static ArrayList<String> keyArray;
     SharedPreferences speicher;
 
     @Override
@@ -74,7 +74,9 @@ public class FirstActivity extends  Activity{
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-      if (requestCode == 1){
+
+        //NEW NOTE
+        if (requestCode == 1){
             if(resultCode == Activity.RESULT_OK){
                 deleteKeyArray();
                 keyArray.add(data.getStringExtra("TheKey").toString());
@@ -82,6 +84,7 @@ public class FirstActivity extends  Activity{
             }
         }
 
+        //NOTE DELETED
         if (requestCode == 2){
             if(resultCode == Activity.RESULT_OK){
                 deleteKeyArray();
@@ -89,25 +92,36 @@ public class FirstActivity extends  Activity{
                 refreshListView(data);
             }
         }
+
+        if (requestCode == 2){
+            if(resultCode == Activity.DEFAULT_KEYS_SHORTCUT){
+                deleteKeyArray();
+                keyArray.remove(data.getIntExtra("ThePosition",0));
+                keyArray.add(data.getIntExtra("ThePosition", 0),data.getStringExtra("TheKey".toString()));
+                refreshListView(data);
+            }
+        }
+
+
     }
     void refreshListView(Intent data){
         SharedPreferences.Editor editor = speicher.edit();
         //WENN LÖSCHEN DANN MUSS DAS IN onActivityResult!!!!
 
-        for (int i = 0; i < keyArray.size(); i++){
+        for (int i = 0; i <keyArray.size(); i++){
             editor.putString(("Notiz_" + i), keyArray.get(i));
          }
         editor.putInt("SizeArray", keyArray.size());
-        editor.commit();
+       // editor.clear();
+         editor.commit();
         System.out.println(speicher.getAll() + " Speicher");
-
         adapter.notifyDataSetChanged();
      }
 
     void deleteKeyArray(){
         SharedPreferences.Editor editor = speicher.edit();
 
-        for (int i = 0; i < keyArray.size(); i++){
+        for (int i = 0; i <keyArray.size(); i++){
             editor.remove("Notiz_" + i);
             editor.commit();
         }

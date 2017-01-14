@@ -15,8 +15,10 @@
         android:layout_height="300dip"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:color="#00695c"
 
+        >
     </TabHost>
 
 </RelativeLayout>

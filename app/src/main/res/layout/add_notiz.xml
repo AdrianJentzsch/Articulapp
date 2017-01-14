@@ -19,7 +19,7 @@
         android:text="save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/save"
+        android:id="@+id/apply"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
