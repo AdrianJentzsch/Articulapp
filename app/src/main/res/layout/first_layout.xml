@@ -18,9 +18,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/add"
-        style="@style/Widget.AppCompat.Button"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:theme="@style/RaisedButton"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
 </RelativeLayout>

@@ -14,10 +14,12 @@ public class MainActivity extends TabActivity {
         super.onCreate(savedInstanceState);
        // setContentView(R.layout.activity_main);
 
-        TabHost mTabHost = getTabHost();
-        mTabHost.addTab(mTabHost.newTabSpec("first").setIndicator("Notizen").setContent(new Intent(this  ,FirstActivity.class )));
-        mTabHost.addTab(mTabHost.newTabSpec("second").setIndicator("Memos").setContent(new Intent(this , SecondActivity.class )));
-        mTabHost.setCurrentTab(0);
+        TabHost tabHost = getTabHost();
+
+        //TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost.addTab(tabHost.newTabSpec("first").setIndicator("Notizen").setContent(new Intent(this  ,FirstActivity.class )));
+        tabHost.addTab(tabHost.newTabSpec("second").setIndicator("Memos").setContent(new Intent(this , SecondActivity.class )));
+        tabHost.setCurrentTab(0);
 
 
     }

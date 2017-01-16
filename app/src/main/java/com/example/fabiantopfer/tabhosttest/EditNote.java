@@ -78,7 +78,7 @@ public class EditNote extends Activity {
                        editor.commit();
                        dialog.cancel();
 
-                       //Back to MainActivity with Key-Value
+                       //Back to ShowNote with Key-Value
                        Intent intent = new Intent(EditNote.this, ShowNote.class);
                        intent.putExtra("TheKey", noteKey);
                        intent.putExtra("ThePosition", position);

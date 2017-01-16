@@ -21,4 +21,9 @@
         <item name="android:colorBackground">@android:color/background_light</item>
     </style>
 
+    <style name="RaisedButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#00897B</item>
+        <item name="colorButtonNormal">#FFFFFF</item>
+    </style>
+
 </resources>

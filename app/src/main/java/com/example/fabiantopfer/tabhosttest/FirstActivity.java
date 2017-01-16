@@ -10,11 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by fabiantopfer on 18.12.16.
  */
-public class FirstActivity extends  Activity{
+public class FirstActivity extends  AppCompatActivity{
 
     private Button addNote;
     private ListView list;
@@ -78,26 +79,25 @@ public class FirstActivity extends  Activity{
         //NEW NOTE
         if (requestCode == 1){
             if(resultCode == Activity.RESULT_OK){
-                deleteKeyArray();
+                deleteKeyArrayFromStorage();
                 keyArray.add(data.getStringExtra("TheKey").toString());
                 refreshListView(data);
             }
         }
 
-        //NOTE DELETED
+        //SHOW NOTE -> NOTE DELETED
         if (requestCode == 2){
             if(resultCode == Activity.RESULT_OK){
-                deleteKeyArray();
+                deleteKeyArrayFromStorage();
                 keyArray.remove(data.getIntExtra("ThePosition",0));
                 refreshListView(data);
             }
         }
 
+        //SHOW NOTE -> NOTE EDITED
         if (requestCode == 2){
             if(resultCode == Activity.DEFAULT_KEYS_SHORTCUT){
-                deleteKeyArray();
-                keyArray.remove(data.getIntExtra("ThePosition",0));
-                keyArray.add(data.getIntExtra("ThePosition", 0),data.getStringExtra("TheKey".toString()));
+                deleteKeyArrayFromStorage();
                 refreshListView(data);
             }
         }
@@ -106,8 +106,6 @@ public class FirstActivity extends  Activity{
     }
     void refreshListView(Intent data){
         SharedPreferences.Editor editor = speicher.edit();
-        //WENN LÖSCHEN DANN MUSS DAS IN onActivityResult!!!!
-
         for (int i = 0; i <keyArray.size(); i++){
             editor.putString(("Notiz_" + i), keyArray.get(i));
          }
@@ -118,7 +116,7 @@ public class FirstActivity extends  Activity{
         adapter.notifyDataSetChanged();
      }
 
-    void deleteKeyArray(){
+    void deleteKeyArrayFromStorage(){
         SharedPreferences.Editor editor = speicher.edit();
 
         for (int i = 0; i <keyArray.size(); i++){

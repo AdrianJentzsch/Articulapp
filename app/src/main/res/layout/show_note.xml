@@ -22,7 +22,9 @@
         android:id="@+id/share_Note"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <Button
         android:text="Delete"
@@ -31,7 +33,9 @@
         android:id="@+id/delete_Note"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <Button
         android:text="Edit"
@@ -39,5 +43,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/edit_Note"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        style="?android:attr/borderlessButtonStyle"
+        />
 </RelativeLayout>
