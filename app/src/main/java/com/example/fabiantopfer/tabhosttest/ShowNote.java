@@ -80,7 +80,7 @@ public class ShowNote extends Activity {
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, sharetext);
                 sendIntent.setType("text/plain");
-                startActivity(sendIntent);
+                startActivity(Intent.createChooser(sendIntent, "share using"));
             }
         });
     }
