@@ -20,9 +20,11 @@ public class ShowNote extends Activity {
 
     private String note;
     private String noteKey;
+    private String sharetext;
     private TextView tv_ShowNote;
     private Button delete;
     private Button edit;
+    private Button share;
     int position;
     SharedPreferences speicher;
 
@@ -43,6 +45,7 @@ public class ShowNote extends Activity {
         tv_ShowNote = (TextView) findViewById(R.id.tv_ShowNote);
         delete  = (Button) findViewById(R.id.delete_Note);
         edit = (Button) findViewById(R.id.edit_Note);
+        share = (Button) findViewById(R.id.share_Note);
 
 
         Intent intent = getIntent();
@@ -66,6 +69,18 @@ public class ShowNote extends Activity {
             public void onClick(View v)
             {
                 editNote();
+            }
+        });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharetext = tv_ShowNote.getText().toString();
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sharetext);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
             }
         });
     }
