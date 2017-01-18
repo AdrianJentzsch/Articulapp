@@ -7,7 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,18 +19,21 @@ import android.widget.EditText;
  * Created by fabiantopfer on 20.12.16.
  */
 
-public class add_Notiz  extends Activity{
+public class add_Notiz  extends AppCompatActivity{
     private Button save;
     private EditText etNotiz;
     SharedPreferences speicher;
     private String key;
+    Toolbar toolbar;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.add_notiz);
+
         InitializeApp();
     }
 

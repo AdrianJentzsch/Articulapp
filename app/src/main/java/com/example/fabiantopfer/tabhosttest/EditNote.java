@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +17,7 @@ import android.widget.TextView;
  * Created by fabiantopfer on 14.01.17.
  */
 
-public class EditNote extends Activity {
+public class EditNote extends AppCompatActivity {
 
     private String noteKey;
     private String note;
@@ -72,8 +73,8 @@ public class EditNote extends Activity {
                        editor.remove(noteKey);
                        editor.remove("Notiz_"+position);
                        noteKey = edittext.getText().toString();
-                       FirstActivity.keyArray.remove(position);
-                       FirstActivity.keyArray.add(position,noteKey);
+                       noteFragment.keyArray.remove(position);
+                       noteFragment.keyArray.add(position,noteKey);
                        editor.putString(noteKey, et_editNote.getText().toString());
                        editor.commit();
                        dialog.cancel();
