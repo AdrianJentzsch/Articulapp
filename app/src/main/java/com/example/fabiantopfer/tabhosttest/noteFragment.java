@@ -4,32 +4,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 
-import android.app.ListFragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class noteFragment extends Fragment {
 
-    private Button addNote;
+    private FloatingActionButton addNote;
     private ListView list;
     private ArrayAdapter <String> adapter;
     static ArrayList<String> keyArray;
@@ -50,7 +42,7 @@ public class noteFragment extends Fragment {
 */
 
 
-       list = (ListView) v.findViewById(R.id.listView);
+       list = (ListView) v.findViewById(R.id.listViewMemos);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -61,7 +53,7 @@ public class noteFragment extends Fragment {
                 startActivityForResult(showNote,2);
             }
         });
-        addNote = (Button)v.findViewById(R.id.add);
+        addNote = (FloatingActionButton) v.findViewById(R.id.add);
         addNote.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -77,8 +69,6 @@ public class noteFragment extends Fragment {
         adapter = new ArrayAdapter<String>(this.getActivity(),android.R.layout.simple_list_item_1, keyArray );
         adapter.notifyDataSetChanged();
         list.setAdapter(adapter);
-
-
 
         int size = speicher.getInt("SizeArray", 0);
         for(int i =0; i < size;i++)

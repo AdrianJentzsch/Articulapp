@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -14,7 +23,7 @@
         android:focusableInTouchMode="true"
         android:text="Notiz"
         android:gravity="top"
-        android:layout_below="@+id/apply"
+        android:layout_below="@+id/save"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="27dp"
@@ -23,15 +32,15 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="apply"
+        android:text="APPLY"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/apply"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        style="?android:attr/borderlessButtonStyle"
-        />
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

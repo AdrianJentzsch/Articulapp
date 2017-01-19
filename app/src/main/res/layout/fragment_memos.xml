@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,26 +7,34 @@
     android:id="@+id/memosFragment"
     >
 
-    <Button
-        android:text="add"
+
+    <TextClock
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/add"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:theme="@style/RaisedButton"
-        style="?android:attr/borderlessButtonStyle"
-        />
+        android:id="@+id/textClock"
+        android:layout_above="@+id/listViewMemos"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp" />
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="448dp"
-        android:id="@+id/listView"
+        android:id="@+id/listViewMemos"
+
+        android:layout_height="350dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentStart="true" />
 
-        />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/fbstart"
+        android:layout_marginTop="23dp"
+        android:id="@+id/mic"
+        android:background="@null"
+        android:elevation="2dp"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

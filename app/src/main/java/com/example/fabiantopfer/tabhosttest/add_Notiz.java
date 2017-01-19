@@ -39,7 +39,7 @@ public class add_Notiz  extends AppCompatActivity{
 
     private void InitializeApp(){
         etNotiz = (EditText) findViewById(R.id.eT_Notiz);
-        save = (Button) findViewById(R.id.apply);
+        save = (Button) findViewById(R.id.save);
         speicher = getSharedPreferences("Notizenspeicher",Context.MODE_PRIVATE);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
