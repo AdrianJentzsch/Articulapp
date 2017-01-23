@@ -23,5 +23,8 @@
         <activity android:name=".EditNote"  android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.STORAGE" />
 
 </manifest>
