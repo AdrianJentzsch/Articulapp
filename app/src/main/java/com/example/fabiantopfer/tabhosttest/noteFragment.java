@@ -42,7 +42,7 @@ public class noteFragment extends Fragment {
 */
 
 
-       list = (ListView) v.findViewById(R.id.listViewMemos);
+        list = (ListView) v.findViewById(R.id.listViewMemos);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

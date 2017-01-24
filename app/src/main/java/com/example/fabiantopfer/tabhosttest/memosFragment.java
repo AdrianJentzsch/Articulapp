@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -159,14 +160,29 @@ public class memosFragment extends Fragment {
                     "SURE",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-
                             audioFile = edittext.getText().toString();
+                            boolean keyIsRepeating = false;
+                            int size = speicher_Memos.getInt("SizeArrayMemo", 0);
+
+
+                          for (int i = 0; i < size; i++) {
+
+                                if (audioFile.equals(keyArrayMemos.get(i))) {
+                                    Toast.makeText(getActivity(), "Name already taken!", Toast.LENGTH_LONG).show();
+                                    keyIsRepeating = true;
+                                }
+
+                            }
+
+
+                            if (keyIsRepeating == false) {
                             refreshListView();
                             keyArrayMemos.add(audioFile);
                             refreshListView();
                             mediaRecorder.reset();
                             mediaRecorder.release();
                             mediaRecorder = null;
+                             }
                         }
                     });
 

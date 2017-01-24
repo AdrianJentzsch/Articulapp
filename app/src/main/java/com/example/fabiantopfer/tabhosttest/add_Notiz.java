@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by fabiantopfer on 20.12.16.
@@ -59,19 +60,35 @@ public class add_Notiz  extends AppCompatActivity{
                 "SURE",
                 new DialogInterface.OnClickListener() {
                      public void onClick(DialogInterface dialog, int id) {
-
                          // SPEICHERN UND LISTVIEW
                          key = edittext.getText().toString();
-                         SharedPreferences.Editor editor = speicher.edit();
-                         editor.putString(key, etNotiz.getText().toString());
-                         editor.commit();
-                         dialog.cancel();
+                         boolean keyIsRepeating = false;
+                         int size = speicher.getInt("SizeArray", 0);
 
-                         //Back to MainActivity with Key-Value
-                         Intent intent = new Intent(add_Notiz.this, MainActivity.class);
-                         intent.putExtra("TheKey", key);
-                         setResult(Activity.RESULT_OK, intent);
-                         finish();
+
+                             for (int i = 0; i < size; i++) {
+
+                                 if (key.equals(noteFragment.keyArray.get(i))) {
+                                     Toast.makeText(add_Notiz.this, "Name already taken!",
+                                             Toast.LENGTH_LONG).show();
+                                     keyIsRepeating = true;
+                                  }
+
+                             }
+
+
+                         if( keyIsRepeating == false) {
+                             SharedPreferences.Editor editor = speicher.edit();
+                             editor.putString(key, etNotiz.getText().toString());
+                             editor.commit();
+                             dialog.cancel();
+
+                             //Back to MainActivity with Key-Value
+                             Intent intent = new Intent(add_Notiz.this, MainActivity.class);
+                             intent.putExtra("TheKey", key);
+                             setResult(Activity.RESULT_OK, intent);
+                             finish();
+                         }
                      }
                 });
 
