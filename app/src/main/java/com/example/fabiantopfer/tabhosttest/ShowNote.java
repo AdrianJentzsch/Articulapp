@@ -43,7 +43,6 @@ public class ShowNote extends AppCompatActivity {
     void InitializeApp(){
         speicher = getSharedPreferences("Notizenspeicher", Context.MODE_PRIVATE);
 
-        tv_ShowNote = (TextView) findViewById(R.id.tv_ShowNote);
         delete  = (Button) findViewById(R.id.delete_Note);
         edit = (Button) findViewById(R.id.edit_Note);
         share = (Button) findViewById(R.id.share_Note);

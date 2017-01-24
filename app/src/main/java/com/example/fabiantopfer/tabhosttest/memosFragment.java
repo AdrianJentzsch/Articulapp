@@ -85,34 +85,47 @@ public class memosFragment extends Fragment {
         adapterMemos = new ArrayAdapter<String>(this.getActivity(),android.R.layout.simple_list_item_1, keyArrayMemos );
         adapterMemos.notifyDataSetChanged();
         list.setAdapter(adapterMemos);
+
+        //ContentValues values = new ContentValues(3);
+        //values.put(MediaStore.MediaColumns.TITLE, audioFile);
+
+        resetAudioRecorder();
+        System.out.println(" Path" + Environment.getExternalStorageDirectory().getAbsolutePath()+ "/" + audioFile);
+
+
+
         return v;
     }
 
+    void resetAudioRecorder(){
+
+        mediaRecorder = new MediaRecorder();
+
+
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + audioFile);
+
+
+    }
     void micPressed(){
 
         //First Time Click on Mic
         if ( clicks == 1){
+
             mic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.fbstop));
             //TODO: Aufnahmefunktion hier einfügen
 
-
-
-            mediaRecorder = new MediaRecorder();
-            //ContentValues values = new ContentValues(3);
-            //values.put(MediaStore.MediaColumns.TITLE, audioFile);
-            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-            mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory() + "/Documents");
-
-
+            resetAudioRecorder();
             try {
+
                 mediaRecorder.prepare();
+                mediaRecorder.start();
             } catch (IOException e) {
                 System.out.println("Fehler bei prepare");
                 e.printStackTrace();
             }
-            mediaRecorder.start();
 
 
             System.out.println("1");
@@ -127,6 +140,7 @@ public class memosFragment extends Fragment {
             //TODO: Speicherfunktion hier einfügen
 
             mediaRecorder.stop();
+
             final EditText edittext  = new EditText(getActivity()); ;
             // ALERT
             AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
@@ -139,9 +153,11 @@ public class memosFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int id) {
 
                             audioFile = edittext.getText().toString();
-
+                            keyArrayMemos.add(audioFile);
+                            adapterMemos.notifyDataSetChanged();
                             mediaRecorder.reset();
                             mediaRecorder.release();
+                            mediaRecorder = null;
                         }
                     });
 
@@ -151,6 +167,8 @@ public class memosFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int id) {
                             mediaRecorder.reset();
                             mediaRecorder.release();
+                            mediaRecorder = null;
+
                             dialog.cancel();
                         }
                     });
