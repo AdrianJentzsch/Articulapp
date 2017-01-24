@@ -36,6 +36,7 @@ public class memosFragment extends Fragment {
     static ArrayList<String> keyArrayMemos;
     private static String audioFile;
     private MediaRecorder mediaRecorder ;
+    SharedPreferences speicher_Memos;
 
 
     @Override
@@ -43,6 +44,8 @@ public class memosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_memos, container, false);
+
+        speicher_Memos = this.getActivity().getSharedPreferences("Notizenspeicher", Context.MODE_PRIVATE);
 
 
         clicks = 1;
@@ -81,7 +84,15 @@ public class memosFragment extends Fragment {
             }
         });
         keyArrayMemos = new ArrayList<String>();
-        keyArrayMemos.add(0,"Hallo");
+
+        int size = speicher_Memos.getInt("SizeArrayMemo", 0);
+        for(int i =0; i < size;i++)
+        {
+            keyArrayMemos.add(speicher_Memos.getString("Memo_"+i, null).toString());
+            System.out.println(keyArrayMemos.get(i));
+
+        }
+
         adapterMemos = new ArrayAdapter<String>(this.getActivity(),android.R.layout.simple_list_item_1, keyArrayMemos );
         adapterMemos.notifyDataSetChanged();
         list.setAdapter(adapterMemos);
@@ -100,13 +111,10 @@ public class memosFragment extends Fragment {
     void resetAudioRecorder(){
 
         mediaRecorder = new MediaRecorder();
-
-
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + audioFile);
-
 
     }
     void micPressed(){
@@ -153,8 +161,9 @@ public class memosFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int id) {
 
                             audioFile = edittext.getText().toString();
+                            refreshListView();
                             keyArrayMemos.add(audioFile);
-                            adapterMemos.notifyDataSetChanged();
+                            refreshListView();
                             mediaRecorder.reset();
                             mediaRecorder.release();
                             mediaRecorder = null;
@@ -191,6 +200,25 @@ public class memosFragment extends Fragment {
 
     }
 
+    void refreshListView(){
+        SharedPreferences.Editor editor = speicher_Memos.edit();
+        for (int i = 0; i <keyArrayMemos.size(); i++){
+            editor.putString(("Memo_" + i), keyArrayMemos.get(i));
+        }
+        editor.putInt("SizeArrayMemo", keyArrayMemos.size());
+        editor.commit();
+        System.out.println(speicher_Memos.getAll() + " Speicher");
+        adapterMemos.notifyDataSetChanged();
+    }
 
+    void deleteKeyArrayFromStorage(){
+        SharedPreferences.Editor editor = speicher_Memos.edit();
+
+        for (int i = 0; i <keyArrayMemos.size(); i++){
+            editor.remove("Memo_" + i);
+            editor.commit();
+        }
+
+    }
 
 }
