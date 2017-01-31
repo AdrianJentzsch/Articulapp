@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -38,15 +40,22 @@ public class memosFragment extends Fragment {
     private static String audioFile;
     private MediaRecorder mediaRecorder ;
     SharedPreferences speicher_Memos;
+    static private String sep;
+    static private String newFolder;
+    private String extStorageDirectory;
+    private  File myNewFolder;
+    private String outputFile = null;
+    private File memo;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_memos, container, false);
 
         speicher_Memos = this.getActivity().getSharedPreferences("Notizenspeicher", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = speicher_Memos.edit();
 
 
         clicks = 1;
@@ -77,16 +86,20 @@ public class memosFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               // Intent showNote = new Intent();
-              //  showNote.setClass(getContext(), ShowNote.class);
-              //  showNote.putExtra("Key",keyArray.get(i));
+                Intent showMemo = new Intent();
+                showMemo.setClass(getContext(), ShowMemo.class);
+                showMemo.putExtra("KeyMemo",keyArrayMemos.get(i));
               //  showNote.putExtra("ArrayPosition",i);
-               // startActivityForResult(showNote,2);
+                startActivity(showMemo);
+
             }
         });
         keyArrayMemos = new ArrayList<String>();
 
         int size = speicher_Memos.getInt("SizeArrayMemo", 0);
+
+        System.out.println(speicher_Memos.getAll() + "Speicher");
+
         for(int i =0; i < size;i++)
         {
             keyArrayMemos.add(speicher_Memos.getString("Memo_"+i, null).toString());
@@ -101,12 +114,20 @@ public class memosFragment extends Fragment {
         //ContentValues values = new ContentValues(3);
         //values.put(MediaStore.MediaColumns.TITLE, audioFile);
 
+
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath();
+        sep = File.separator;
+        newFolder = "MemosDirectory";
+        myNewFolder = new File(outputFile + sep + newFolder);
+        myNewFolder.mkdir();
+
+        newFile();
         resetAudioRecorder();
-        System.out.println(" Path" + Environment.getExternalStorageDirectory().getAbsolutePath()+ "/" + audioFile);
-
-
-
         return v;
+    }
+
+    void newFile(){
+        memo = new File(outputFile + sep + newFolder + sep + audioFile+".3gp");
     }
 
     void resetAudioRecorder(){
@@ -115,7 +136,8 @@ public class memosFragment extends Fragment {
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + audioFile);
+        mediaRecorder.setOutputFile(memo.getPath());
+
 
     }
     void micPressed(){
@@ -128,7 +150,6 @@ public class memosFragment extends Fragment {
 
             resetAudioRecorder();
             try {
-
                 mediaRecorder.prepare();
                 mediaRecorder.start();
             } catch (IOException e) {
@@ -136,7 +157,7 @@ public class memosFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
+            Toast.makeText(getActivity(), "Recording started", Toast.LENGTH_SHORT).show();
             System.out.println("1");
             clicks = 2;
         }
@@ -149,8 +170,11 @@ public class memosFragment extends Fragment {
             //TODO: Speicherfunktion hier einfügen
 
             mediaRecorder.stop();
+            mediaRecorder.reset();
+            mediaRecorder.release();
+            mediaRecorder = null;
 
-            final EditText edittext  = new EditText(getActivity()); ;
+            final EditText edittext  = new EditText(getActivity());
             // ALERT
             AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
             builder1.setMessage("SAVE");
@@ -160,7 +184,9 @@ public class memosFragment extends Fragment {
                     "SURE",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            audioFile = edittext.getText().toString();
+                            audioFile = edittext.getText().toString() ;
+                            newFile();
+                            System.out.println(memo.getAbsolutePath());
                             boolean keyIsRepeating = false;
                             int size = speicher_Memos.getInt("SizeArrayMemo", 0);
 
@@ -176,12 +202,10 @@ public class memosFragment extends Fragment {
 
 
                             if (keyIsRepeating == false) {
-                            refreshListView();
-                            keyArrayMemos.add(audioFile);
-                            refreshListView();
-                            mediaRecorder.reset();
-                            mediaRecorder.release();
-                            mediaRecorder = null;
+                                refreshListView();
+                                keyArrayMemos.add(audioFile);
+                             refreshListView();
+
                              }
                         }
                     });
@@ -190,22 +214,12 @@ public class memosFragment extends Fragment {
                     "NO",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            mediaRecorder.reset();
-                            mediaRecorder.release();
-                            mediaRecorder = null;
-
                             dialog.cancel();
                         }
                     });
 
             AlertDialog alert11 = builder1.create();
             alert11.show();
-
-
-
-
-
-
             System.out.println("2");
             clicks = 1;
         }
@@ -221,7 +235,7 @@ public class memosFragment extends Fragment {
         for (int i = 0; i <keyArrayMemos.size(); i++){
             editor.putString(("Memo_" + i), keyArrayMemos.get(i));
         }
-        editor.putInt("SizeArrayMemo", keyArrayMemos.size());
+        editor.putInt("SizeArrayMemo",keyArrayMemos.size());
         editor.commit();
         System.out.println(speicher_Memos.getAll() + " Speicher");
         adapterMemos.notifyDataSetChanged();
@@ -237,4 +251,18 @@ public class memosFragment extends Fragment {
 
     }
 
-}
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+
+
+
+            }
+
+
+        }
+            }
+
+
+    }

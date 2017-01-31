@@ -26,7 +26,7 @@
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_media_play"
         android:layout_marginTop="110dp"
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/playButton"
         android:layout_below="@+id/my_toolbar"
         android:layout_centerHorizontal="true" />
 
