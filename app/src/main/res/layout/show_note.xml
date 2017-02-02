@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_alignParentTop="true"
@@ -19,40 +18,15 @@
 
 
     <Button
-        android:text=" "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/share_Note"
-        android:textColor="#FFFFFF"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@android:drawable/ic_menu_share" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:id="@+id/edit_Note"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:background="@android:drawable/ic_menu_edit"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/delete_Note"
-        android:textColor="#FFFFFF"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:background="@android:drawable/ic_menu_delete"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/share_Note"
-        android:layout_toEndOf="@+id/share_Note"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp" />
+        android:layout_alignParentEnd="true"
+        android:text="EDIT" />
 
     <TextView
         android:text="TextView"
@@ -66,5 +40,29 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/delete_Note"
+        android:textColor="#FFFFFF"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/share_Note"
+        android:layout_toEndOf="@+id/share_Note"
+        android:text="DELETE" />
+
+    <Button
+        android:text="SHARE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/share_Note"
+        android:textColor="#FFFFFF"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

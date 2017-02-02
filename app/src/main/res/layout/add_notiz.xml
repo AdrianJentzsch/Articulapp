@@ -6,15 +6,18 @@
     android:weightSum="1"
     android:baselineAligned="false"
     android:orientation="vertical">
+
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="match_parent"
@@ -28,7 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="Notiz"
+        android:text=""
         android:gravity="top"
         android:inputType="textMultiLine"
         android:layout_below="@+id/my_toolbar" />
@@ -38,21 +41,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/save"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_alignParentTop="true"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:text="SAVE"
+        android:layout_above="@+id/eT_Notiz"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="SAVE" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/share"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_alignParentTop="true"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:text="SHARE"
+        android:layout_above="@+id/eT_Notiz"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="SHARE" />
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
