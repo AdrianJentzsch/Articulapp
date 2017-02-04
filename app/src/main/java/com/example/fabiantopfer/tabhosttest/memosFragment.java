@@ -27,7 +27,6 @@ public class memosFragment extends Fragment {
     private String outputFile = null;
     private File memo;
     MediaPlayer mediaPlayer;
-
     Button playBt;
     Button deleteBt;
     ImageButton mic ;
@@ -38,8 +37,7 @@ public class memosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_memos, container, false);
+         View v = inflater.inflate(R.layout.fragment_memos, container, false);
         mediaPlayer = new MediaPlayer();
 
         //NEW DIRECTORY ON SD CARD

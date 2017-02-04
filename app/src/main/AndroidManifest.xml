@@ -22,7 +22,6 @@
         <activity android:name=".add_Notiz"  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ShowNote"  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".EditNote"  android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ShowMemo"  android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>

@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,21 +25,13 @@ public class noteFragment extends Fragment {
     private ArrayAdapter <String> adapter;
     static ArrayList<String> keyArray;
     SharedPreferences speicher;
-    Toolbar toolbar;
+
 
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_note, container, false);
-
-      /* toolbar = (Toolbar) v.findViewById(R.id.toolbar);
-
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-*/
-
 
         list = (ListView) v.findViewById(R.id.listViewMemos);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -129,7 +120,6 @@ public class noteFragment extends Fragment {
             editor.putString(("Notiz_" + i), keyArray.get(i));
         }
         editor.putInt("SizeArray", keyArray.size());
-        // editor.clear();
         editor.commit();
         System.out.println(speicher.getAll() + " Speicher");
         adapter.notifyDataSetChanged();

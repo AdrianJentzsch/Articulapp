@@ -25,10 +25,6 @@ public class add_Notiz  extends AppCompatActivity{
     private EditText etNotiz;
     SharedPreferences speicher;
     private String key;
-    Toolbar toolbar;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

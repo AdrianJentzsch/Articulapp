@@ -97,7 +97,6 @@ public class ShowNote extends AppCompatActivity {
         System.out.println(position);
         editor.commit();
 
-       // FirstActivity.keyArray.remove(position);
         Intent back = new Intent(ShowNote.this, MainActivity.class);
         back.putExtra("ThePosition", index);
         setResult(Activity.RESULT_OK, back);
